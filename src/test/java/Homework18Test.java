@@ -67,7 +67,7 @@ public class Homework18Test extends BaseTest {
                 By.xpath("//*[@id=\"mainFooter\"]/div[1]/span/span[2]")));
         Assert.assertTrue(pauseButton.isDisplayed(), "The pause button is displayed.");
 
-        driver.quit();
+
 
     }
 }
