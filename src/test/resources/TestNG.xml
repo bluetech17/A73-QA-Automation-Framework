@@ -4,12 +4,14 @@
 <suite name="TestNG">
 
     <test name="Example Test" preserve-order="false">
-        <parameter name="baseUrl" value="https://qa.koel.app/"/>
+        <parameter name="browser" value="chrome"/>
+        <parameter name="gridUrl" value="http://localhost:4444"/>
+        <parameter name="BaseURL" value="https://qa.koel.app"/>
+
 
         <classes>
             <class name="LoginTests"/>
             <class name="BaseTest"/>
-            <class name="Homework23Test"/>
         </classes>
     </test>
 </suite>
