@@ -17,6 +17,15 @@ dependencies {
 
 test {
     useTestNG() {
-        suites "src/test/resources/Homework18.xml"
+        suites "src/test/resources/TestNG.xml"
+    }
+    // Pass browser system property to your tests
+    systemProperty 'browser', System.getProperty('browser', 'chrome')
+
+    // Optional: detailed logging
+    testLogging {
+        events = ["passed", "skipped", "failed"]
+        exceptionFormat = 'full'
+        showStandardStreams = true
     }
 }
