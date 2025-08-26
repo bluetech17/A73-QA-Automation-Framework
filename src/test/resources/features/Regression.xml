@@ -1,0 +1,13 @@
+<suite name="Regression Suite" parallel="methods" thread-count="2">
+
+    <test name="Regression Tests" preserve-order="true">
+        <classes>
+            <class name="LoginTests"/>
+            <class name="AddSongToPlaylistTest"/>
+            <class name="PlaySongTest"/>
+            <class name="DeletePlaylistTest"/>
+            <class name="RenamePlaylistTest"/>
+        </classes>
+    </test>
+
+</suite>

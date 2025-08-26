@@ -1,12 +1,15 @@
 import io.github.bonigarcia.wdm.WebDriverManager;
+//import jdk.internal.access.JavaIOFileDescriptorAccess;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.edge.EdgeOptions;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.*;
 
 import java.net.MalformedURLException;
@@ -18,10 +21,20 @@ import java.util.HashMap;
 public class BaseTest {
 
     private static final ThreadLocal<WebDriver> threadDriver = new ThreadLocal<>();
-    public String url = null;
+    protected static final ThreadLocal<WebDriverWait> threadWait = new ThreadLocal<>();
+    protected static final ThreadLocal<Actions> threadActions = new ThreadLocal<>();
+    protected String url;
+   // public String url = null;
 
     public static WebDriver getDriver() {
         return threadDriver.get();
+    }
+    public static WebDriverWait getWait() {
+        return threadWait.get();
+    }
+
+    public static Actions getActions() {
+        return threadActions.get();
     }
 
     @BeforeMethod
@@ -29,8 +42,16 @@ public class BaseTest {
     public void setUpBrowser(@Optional("https://qa.koel.app/") String BaseURL) throws MalformedURLException {
         url = BaseURL;
         String browser = System.getProperty("browser", "chrome");
+
         WebDriver driver = pickBrowser(browser);
         threadDriver.set(driver);
+
+        // Initialize wait and actions for this thread
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        threadWait.set(wait);
+
+        Actions actions = new Actions(driver);
+        threadActions.set(actions);
 
         getDriver().manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         navigateToPage();
@@ -66,11 +87,16 @@ public class BaseTest {
             case "cloud":
                 return lambdaTest();
 
+            case "chrome":
             default:
-                WebDriverManager.chromedriver().setup();
+                // Clear any cached driver and force the correct version for installed Chrome
+                WebDriverManager.chromedriver().clearDriverCache().setup();
+
                 ChromeOptions chromeOptions = new ChromeOptions();
                 chromeOptions.addArguments("--remote-allow-origins=*");
+
                 return new ChromeDriver(chromeOptions);
+
         }
     }
 
@@ -100,7 +126,7 @@ public class BaseTest {
         capabilities.setCapability("LT:Options", ltOptions);
 
         RemoteWebDriver driver= new RemoteWebDriver(new URL(hubURL), capabilities);
-    driver.get(url);
+        driver.get(url);
         System.out.println(">>> LambdaTest session started!");
         return driver;
     }

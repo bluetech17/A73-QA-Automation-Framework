@@ -10,9 +10,9 @@ repositories {
 }
 
     dependencies {
-        testImplementation 'org.testng:testng:7.6.1'
-        implementation 'org.seleniumhq.selenium:selenium-java:4.5.0'
-        testImplementation 'io.github.bonigarcia:webdrivermanager:5.3.1'
+        testImplementation 'org.testng:testng:7.8.0'
+        implementation 'org.seleniumhq.selenium:selenium-java:4.25.0'
+        testImplementation 'io.github.bonigarcia:webdrivermanager:5.9.2'
         implementation 'io.cucumber:cucumber-testng:7.9.0'
         implementation 'io.cucumber:cucumber-core:7.9.0'
         implementation 'io.cucumber:cucumber-java:7.9.0'
@@ -22,7 +22,8 @@ repositories {
 
 test {
     useTestNG() {
-        suites "src/test/resources/cucumber.xml"
+      suites "src/test/resources/Smoke.xml"
+       // suites "src/test/resources/Regression.xml"
     }
     // Pass browser system property to your tests
     systemProperty 'browser', System.getProperty('browser', 'chrome')

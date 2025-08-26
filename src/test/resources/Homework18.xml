@@ -3,7 +3,7 @@
 <suite name="Homework18Suite">
     <test name="Play Song Test">
         <classes>
-            <class name="Homework18Test">
+            <class name="PlaySongTest">
                 <methods>
                     <include name="playSong"/>
                 </methods>
