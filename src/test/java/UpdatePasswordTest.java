@@ -13,7 +13,7 @@ import pages.ProfilePreferencesPage;
 import java.time.Duration;
 
 
-public class UpdateEmailTest {
+public class UpdatePasswordTest {
 
     private WebDriver driver;
     private LoginPage loginPage;
@@ -36,11 +36,12 @@ public class UpdateEmailTest {
     public void updateEmailPreferenceTest(String baseUrl) {
         driver.get(baseUrl);
 
-        loginPage.login("arianna.gunn@testpro.io", "Seventeen17");
+        loginPage.login("ariannagunn17@gmail.com", "Seventeen17");
 
         profilePreferencesPage.student.click();
         profilePreferencesPage.enterPassword("Seventeen17");
-        profilePreferencesPage.enterNewEmail("ariannagunn17@gmail.com");
+        profilePreferencesPage.enterMyEmail("ariannagunn17@gmail.com");
+        profilePreferencesPage.enterNewPassword("Automationday1!");
         profilePreferencesPage.saveProfileBtn.click();
 
 

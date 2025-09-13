@@ -23,6 +23,9 @@ public class ProfilePreferencesPage extends BasePage {
     @FindBy(xpath = "//*[@id='inputProfileEmail']")
     public WebElement currentEmail;
 
+    @FindBy(xpath = "//*[@id='inputProfileNewPassword']")
+    public WebElement newPassword;
+
     @FindBy(xpath = "//*[@id='profileWrapper']/div/form/div[5]/button")
     public WebElement saveProfileBtn;
 
@@ -32,6 +35,7 @@ public class ProfilePreferencesPage extends BasePage {
 
     public ProfilePreferencesPage(WebDriver givenDriver) {
         super(givenDriver);
+        PageFactory.initElements(driver, this);
     }
 
     public void clickStudentIcon() {
@@ -49,12 +53,18 @@ public class ProfilePreferencesPage extends BasePage {
         currentPassword.sendKeys(password);
     }
 
-    public void enterNewEmail(String email) {
+    public void enterMyEmail(String email) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
         wait.until(ExpectedConditions.visibilityOf(currentEmail));
         // WebElement emailField = driver.findElement(By.xpath("//*[@id='inputProfileEmail']"));
         currentEmail.clear();
         currentEmail.sendKeys(email);
+    }
+    public void enterNewPassword(String password) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOf(newPassword));
+        newPassword.clear();
+        newPassword.sendKeys(password);
     }
 
     public void clickSaveProfileBtn() {
